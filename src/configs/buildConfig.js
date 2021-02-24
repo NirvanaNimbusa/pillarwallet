@@ -31,6 +31,7 @@ export const buildEnvironment = {
   INFURA_PROJECT_ID: '_infura_project_id_',
   ETHPLORER_API_KEY: '_ethplorer_api_key_',
   RAMPNETWORK_API_KEY: '_rampnetwork_api_key_',
+  INSTABUG_TOKEN: '_instabug_token_',
 };
 
 // Optional Developer variables are fixed for both environment contexts, undefined by default
@@ -41,4 +42,5 @@ export const devOptions = {
   SHOW_LANG_TOGGLE: undefined,
   DEFAULT_PIN: undefined,
   DISABLE_EXTERNAL_TRANSLATIONS_ON_DEV: undefined,
+  ENABLE_INSTABUG_APM: undefined,
 };
