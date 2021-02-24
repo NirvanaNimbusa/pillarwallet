@@ -35,6 +35,7 @@ import { NavigationActions } from 'react-navigation';
 import remoteConfig from '@react-native-firebase/remote-config';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import Instabug, { APM, NetworkLogger } from 'instabug-reactnative';
 
 import 'services/localisation/translations';
 import localeConfig from 'configs/localeConfig';
@@ -140,6 +141,19 @@ class App extends React.Component<Props, *> {
     this.state = {
       env: null,
     };
+
+    Instabug.startWithToken(getEnv().INSTABUG_TOKEN, [Instabug.invocationEvent.shake]);
+
+    if (__DEV__ && !getEnv().ENABLE_INSTABUG_APM) {
+      APM.setEnabled(false);
+    }
+
+    // Temporary workaround, see https://github.com/Instabug/Instabug-React-Native/issues/553
+    // In dev mode, logging a request/response with a typed array in the body causes
+    // an exception that in turn causes a crash when it's being handled.
+    if (__DEV__) {
+      NetworkLogger.setEnabled(false);
+    }
   }
 
   // https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html#gradual-migration-path
